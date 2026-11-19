@@ -9,6 +9,7 @@ All notable changes to this project are documented here. This project adheres to
 - Settings window with language, theme, hotkey, retention, privacy, OCR and paste options.
 - Unified dark/light control styles for TextBox, ComboBox, CheckBox, Button and ScrollBar.
 - Custom window chrome for the settings window.
+- Global hotkey `Ctrl+Shift+V` now shows or hides the history window.
 - Collections with creation, assignment and filtering.
 - Copy action: copy any clip back to the clipboard with the card button or a double-click.
 - Per-application paste rules backed by SQLite and the transformation pipeline.

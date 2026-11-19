@@ -29,6 +29,7 @@ public partial class App : Application
     private CancellationTokenSource? _shutdown;
     private ILogger<App>? _logger;
     private MainViewModel? _viewModel;
+    private GlobalHotkey? _hotkey;
 
     protected override async void OnStartup(StartupEventArgs e)
     {
@@ -78,6 +79,22 @@ public partial class App : Application
             _ = _viewModel.LoadCommand.ExecuteAsync(null);
             MainWindow = window;
             window.Show();
+
+            _hotkey = new GlobalHotkey(settings.Current.General.HotkeyToggle);
+            _hotkey.HotkeyPressed += (_, _) => Dispatcher.Invoke(() =>
+            {
+                if (window.IsVisible)
+                {
+                    window.Hide();
+                }
+                else
+                {
+                    window.Show();
+                    if (window.WindowState == WindowState.Minimized)
+                        window.WindowState = WindowState.Normal;
+                    window.Activate();
+                }
+            });
         }
         catch (Exception ex)
         {
@@ -138,6 +155,7 @@ public partial class App : Application
 
     protected override void OnExit(ExitEventArgs e)
     {
+        _hotkey?.Dispose();
         if (_monitor is not null)
         {
             _monitor.Stop();

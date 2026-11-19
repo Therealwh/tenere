@@ -25,6 +25,7 @@ Last updated: 2026-11-19
 - Per-application paste rules stored in SQLite and applied through the transformation pipeline.
 - Per-monitor DPI awareness manifest added.
 - Startup load and live refresh after capture fixed.
+- Global hotkey toggles the history window.
 - English and Russian resources, screenshot and demo GIF added.
 - Language switches immediately through `DynamicResource`; no restart required.
 - Opt-in updater with SHA-256 verification implemented.
