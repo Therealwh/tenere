@@ -1,5 +1,5 @@
-using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
+using FlauiApplication = FlaUI.Core.Application;
 using FlaUI.UIA3;
 
 namespace Tenere.UiTests;
@@ -13,7 +13,7 @@ public class MainWindowTests
         var executable = Path.Combine(AppContext.BaseDirectory, "Tenere.exe");
         Assert.True(File.Exists(executable), $"Missing app binary: {executable}");
 
-        using var app = Application.Launch(executable);
+        using var app = FlauiApplication.Launch(executable);
         using var automation = new UIA3Automation();
 
         var window = app.GetMainWindow(automation, TimeSpan.FromSeconds(15));
@@ -37,7 +37,7 @@ public class MainWindowTests
     public void SettingsButton_OpensSettingsWindow()
     {
         var executable = Path.Combine(AppContext.BaseDirectory, "Tenere.exe");
-        using var app = Application.Launch(executable);
+        using var app = FlauiApplication.Launch(executable);
         using var automation = new UIA3Automation();
 
         var main = app.GetMainWindow(automation, TimeSpan.FromSeconds(15));
@@ -52,6 +52,28 @@ public class MainWindowTests
             .FirstOrDefault(window => window.Title is "Settings" or "Настройки");
         Assert.NotNull(settings);
         Assert.NotNull(settings.FindFirstDescendant(cf => cf.ByAutomationId("LanguageCombo")));
+
+        app.Close();
+    }
+
+    [Fact]
+    [Trait("Category", "UI")]
+    public void CopyButton_RunsCopyCommand()
+    {
+        var executable = Path.Combine(AppContext.BaseDirectory, "Tenere.exe");
+        using var app = FlauiApplication.Launch(executable);
+        using var automation = new UIA3Automation();
+
+        var main = app.GetMainWindow(automation, TimeSpan.FromSeconds(15));
+        Assert.NotNull(main);
+
+        var copy = main.FindFirstDescendant(cf => cf.ByAutomationId("CopyButton"))?.AsButton();
+        Assert.NotNull(copy);
+        copy.Click();
+        Thread.Sleep(500);
+
+        var status = main.FindFirstDescendant(cf => cf.ByText("Copied to clipboard."));
+        Assert.NotNull(status);
 
         app.Close();
     }

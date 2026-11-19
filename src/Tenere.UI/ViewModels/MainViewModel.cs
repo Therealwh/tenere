@@ -192,6 +192,21 @@ public sealed partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private async Task CopyAsync(ClipItem item)
+    {
+        try
+        {
+            await _writer.CopyAsync(item, CancellationToken.None);
+            StatusMessage = "Copied to clipboard.";
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Copy failed");
+            StatusMessage = "Copy failed.";
+        }
+    }
+
+    [RelayCommand]
     private async Task PinAsync(ClipItem item)
     {
         try

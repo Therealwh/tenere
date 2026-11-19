@@ -24,6 +24,7 @@ No account. No cloud. No telemetry.
 ## Features
 
 - **Clipboard history** — text, links, code, images, tables, colors and files, with source app and timestamps.
+- **Copy back** — put any clip on the clipboard with one click or a double-click on its card.
 - **Visual memory** — switch between a compact list and a card grid with previews.
 - **Instant search** — full-text search across plain text, OCR text, source apps, tags and dates.
 - **Local OCR** — Windows Media OCR recognizes text inside copied images. Nothing leaves the device.

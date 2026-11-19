@@ -20,6 +20,7 @@ Last updated: 2026-11-19
 - Unified dark/light styles for input controls and custom chrome for the settings window;
   screenshots added to both READMEs.
 - Collections: create, assign clips and filter history.
+- Copy action on clip cards: button and double-click put a clip back on the clipboard.
 - Per-application paste rules stored in SQLite and applied through the transformation pipeline.
 - Per-monitor DPI awareness manifest added.
 - Startup load and live refresh after capture fixed.
@@ -56,8 +57,8 @@ Last updated: 2026-11-19
 
 ## Last successful test
 
-`dotnet test Tenere.slnx -c Release --no-build` — 25 passed, 0 failed
-(UnitTests 12, IntegrationTests 11, UiTests 2 real FlaUI tests).
+`dotnet test Tenere.slnx -c Release --no-build` — 26 passed, 0 failed
+(UnitTests 12, IntegrationTests 11, UiTests 3 real FlaUI tests).
 
 ## Benchmarks
 

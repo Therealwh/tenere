@@ -13,6 +13,7 @@
   <data name="EmptyTitle" xml:space="preserve"><value>Пока пусто</value></data>
   <data name="EmptyHint" xml:space="preserve"><value>Скопируйте что-нибудь — оно появится здесь сразу.</value></data>
   <data name="Paste" xml:space="preserve"><value>Вставить</value></data>
+  <data name="Copy" xml:space="preserve"><value>Скопировать в буфер</value></data>
   <data name="Pin" xml:space="preserve"><value>Закрепить</value></data>
   <data name="Delete" xml:space="preserve"><value>Удалить</value></data>
   <data name="Privacy" xml:space="preserve"><value>Защита приватности</value></data>

@@ -23,6 +23,7 @@ public static class Strings
     public static string EmptyTitle => Get(nameof(EmptyTitle));
     public static string EmptyHint => Get(nameof(EmptyHint));
     public static string Paste => Get(nameof(Paste));
+    public static string Copy => Get(nameof(Copy));
     public static string Pin => Get(nameof(Pin));
     public static string Delete => Get(nameof(Delete));
     public static string Privacy => Get(nameof(Privacy));

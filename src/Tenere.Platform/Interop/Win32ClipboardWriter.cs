@@ -45,6 +45,22 @@ public sealed class Win32ClipboardWriter : IClipboardWriter
         return Task.CompletedTask;
     }
 
+    /// <summary>Puts the clip text on the clipboard without sending Ctrl+V.</summary>
+    public Task CopyAsync(ClipItem item, CancellationToken ct)
+    {
+        if (ct.IsCancellationRequested || item is null) return Task.CompletedTask;
+
+        try
+        {
+            _monitor?.SuppressNext();
+            StaClipboardRunner.Invoke(() =>
+                ClipboardData.WriteText(item.PlainText ?? string.Empty, ClipboardTimeoutMs));
+        }
+        catch { }
+
+        return Task.CompletedTask;
+    }
+
     public Task RestorePreviousAsync(CancellationToken ct)
     {
         if (ct.IsCancellationRequested) return Task.CompletedTask;

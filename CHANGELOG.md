@@ -10,6 +10,7 @@ All notable changes to this project are documented here. This project adheres to
 - Unified dark/light control styles for TextBox, ComboBox, CheckBox, Button and ScrollBar.
 - Custom window chrome for the settings window.
 - Collections with creation, assignment and filtering.
+- Copy action: copy any clip back to the clipboard with the card button or a double-click.
 - Per-application paste rules backed by SQLite and the transformation pipeline.
 - Per-monitor DPI awareness manifest.
 - Initial solution structure with .NET 10 LTS and WPF.
