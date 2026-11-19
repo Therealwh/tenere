@@ -13,6 +13,7 @@ Last updated: 2026-11-19
   `App → UI → Core → {Data, Ocr, Platform, Updater, Shared}`.
 - Core contracts, capture pipeline, privacy filter and transformation pipeline implemented.
 - SQLite data layer with FTS5, triggers, indexes and retention implemented.
+- Search supports prefix matching and substring fallback: typing a few letters finds clips.
 - Win32 clipboard monitor, writer, hotkeys, source-app resolver and Mica backdrop implemented.
 - Local Windows OCR adapter implemented with graceful degradation when no language pack exists.
 - WPF shell with visual history, search, filters, themes and localization implemented.
@@ -57,8 +58,8 @@ Last updated: 2026-11-19
 
 ## Last successful test
 
-`dotnet test Tenere.slnx -c Release --no-build` — 27 passed, 0 failed
-(UnitTests 12, IntegrationTests 11, UiTests 4 real FlaUI tests).
+`dotnet test Tenere.slnx -c Release --no-build` — 29 passed, 0 failed
+(UnitTests 12, IntegrationTests 13, UiTests 4 real FlaUI tests).
 
 ## Benchmarks
 

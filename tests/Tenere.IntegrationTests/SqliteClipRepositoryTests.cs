@@ -244,6 +244,30 @@ public sealed class SqliteClipRepositoryTests : IDisposable
         Assert.Equal(0, await _repository.CountAsync(CancellationToken.None));
     }
 
+    [Fact]
+    public async Task Search_MatchesWordPrefix()
+    {
+        await _repository.AddAsync(NewClip("Tenere remembers everything you copy", ClipContentType.Text),
+            EmptyFormats, CancellationToken.None);
+
+        var results = await _repository.SearchAsync(
+            new ClipQuery("Te", null, null, null, null, null, null), CancellationToken.None);
+
+        Assert.NotEmpty(results);
+    }
+
+    [Fact]
+    public async Task Search_MatchesSubstringInsideWord()
+    {
+        await _repository.AddAsync(NewClip("Tenere remembers everything you copy", ClipContentType.Text),
+            EmptyFormats, CancellationToken.None);
+
+        var results = await _repository.SearchAsync(
+            new ClipQuery("mem", null, null, null, null, null, null), CancellationToken.None);
+
+        Assert.NotEmpty(results);
+    }
+
     private static IReadOnlyDictionary<string, byte[]> EmptyFormats =>
         new Dictionary<string, byte[]>();
 

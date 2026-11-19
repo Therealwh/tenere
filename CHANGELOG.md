@@ -15,7 +15,7 @@ All notable changes to this project are documented here. This project adheres to
 - Per-monitor DPI awareness manifest.
 - Initial solution structure with .NET 10 LTS and WPF.
 - Clipboard capture pipeline with privacy filtering and deduplication by content hash.
-- SQLite storage with FTS5 full-text search.
+- SQLite storage with FTS5 full-text search, prefix matching while typing and substring fallback.
 - Local OCR adapter using Windows Media OCR.
 - Smart paste transformation pipeline.
 - English and Russian localization resources with live switching via `DynamicResource` — no restart needed.

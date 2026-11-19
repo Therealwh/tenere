@@ -113,30 +113,39 @@ public sealed class SqliteClipRepository : IClipRepository
     {
         ArgumentNullException.ThrowIfNull(query);
 
+        if (!string.IsNullOrWhiteSpace(query.Text))
+        {
+            var prefixMatches = await ExecuteSearchAsync(query, useFts: true, ct);
+            if (prefixMatches.Count > 0) return prefixMatches;
+
+            // FTS5 prefix search cannot match inside a word. Fall back to a substring search.
+            return await ExecuteSearchAsync(query, useFts: false, ct);
+        }
+
+        return await ExecuteSearchAsync(query, useFts: false, ct);
+    }
+
+    private async Task<IReadOnlyList<ClipItem>> ExecuteSearchAsync(ClipQuery query, bool useFts, CancellationToken ct)
+    {
         var sql = new StringBuilder(SelectClipSql);
         var where = new List<string>();
 
-        if (!string.IsNullOrWhiteSpace(query.Text))
+        if (useFts && !string.IsNullOrWhiteSpace(query.Text))
         {
             sql.Append(" JOIN clip_fts f ON f.rowid = c.id ");
             where.Add("clip_fts MATCH $match");
         }
+        else if (!string.IsNullOrWhiteSpace(query.Text))
+        {
+            where.Add("(c.plain_text LIKE $like ESCAPE '\\' OR COALESCE(c.ocr_text, '') LIKE $like ESCAPE '\\' " +
+                      "OR COALESCE(c.title, '') LIKE $like ESCAPE '\\' OR COALESCE(c.source_app, '') LIKE $like ESCAPE '\\')");
+        }
 
-        var type = query.Type;
-        var from = query.From;
-        var to = query.To;
-        var collectionId = query.CollectionId;
-        var pinned = query.Pinned;
-        if (type.HasValue)
-            where.Add("c.content_type = $type");
-        if (from.HasValue)
-            where.Add("c.created_at >= $from");
-        if (to.HasValue)
-            where.Add("c.created_at <= $to");
-        if (collectionId.HasValue)
-            where.Add("c.collection_id = $collectionId");
-        if (pinned.HasValue)
-            where.Add("c.pinned = $pinned");
+        if (query.Type.HasValue) where.Add("c.content_type = $type");
+        if (query.From.HasValue) where.Add("c.created_at >= $from");
+        if (query.To.HasValue) where.Add("c.created_at <= $to");
+        if (query.CollectionId.HasValue) where.Add("c.collection_id = $collectionId");
+        if (query.Pinned.HasValue) where.Add("c.pinned = $pinned");
         if (!string.IsNullOrWhiteSpace(query.Tag))
             where.Add("EXISTS (SELECT 1 FROM clip_tags ct JOIN tags t ON t.id = ct.tag_id WHERE ct.clip_id = c.id AND t.name = $tag)");
 
@@ -149,20 +158,16 @@ public sealed class SqliteClipRepository : IClipRepository
         await using var command = connection.CreateCommand();
         command.CommandText = sql.ToString();
 
-        if (!string.IsNullOrWhiteSpace(query.Text))
+        if (useFts && !string.IsNullOrWhiteSpace(query.Text))
             command.Parameters.AddWithValue("$match", BuildFtsMatch(query.Text));
-        if (type.HasValue)
-            command.Parameters.AddWithValue("$type", (int)type.Value);
-        if (from.HasValue)
-            command.Parameters.AddWithValue("$from", ToStorage(from.Value));
-        if (to.HasValue)
-            command.Parameters.AddWithValue("$to", ToStorage(to.Value));
-        if (collectionId.HasValue)
-            command.Parameters.AddWithValue("$collectionId", collectionId.Value);
-        if (pinned.HasValue)
-            command.Parameters.AddWithValue("$pinned", pinned.Value ? 1 : 0);
-        if (!string.IsNullOrWhiteSpace(query.Tag))
-            command.Parameters.AddWithValue("$tag", query.Tag);
+        else if (!string.IsNullOrWhiteSpace(query.Text))
+            command.Parameters.AddWithValue("$like", "%" + EscapeLike(query.Text.Trim()) + "%");
+        if (query.Type.HasValue) command.Parameters.AddWithValue("$type", (int)query.Type.Value);
+        if (query.From.HasValue) command.Parameters.AddWithValue("$from", ToStorage(query.From.Value));
+        if (query.To.HasValue) command.Parameters.AddWithValue("$to", ToStorage(query.To.Value));
+        if (query.CollectionId.HasValue) command.Parameters.AddWithValue("$collectionId", query.CollectionId.Value);
+        if (query.Pinned.HasValue) command.Parameters.AddWithValue("$pinned", query.Pinned.Value ? 1 : 0);
+        if (!string.IsNullOrWhiteSpace(query.Tag)) command.Parameters.AddWithValue("$tag", query.Tag);
         command.Parameters.AddWithValue("$limit", Math.Clamp(query.Limit, 0, int.MaxValue));
         command.Parameters.AddWithValue("$offset", Math.Max(0, query.Offset));
 
@@ -385,9 +390,15 @@ public sealed class SqliteClipRepository : IClipRepository
 
     private static string BuildFtsMatch(string text)
     {
+        // Prefix on every token: typing "Te" finds "Tenere", "rep" finds "remember".
         var tokens = WordRegex.Matches(text)
-            .Select(m => "\"" + m.Value.Replace("\"", "\"\"") + "\"")
+            .Select(match => match.Value + "*")
             .ToArray();
         return tokens.Length == 0 ? "\"\"" : string.Join(" AND ", tokens);
     }
+
+    private static string EscapeLike(string text) => text
+        .Replace("\\", "\\\\", StringComparison.Ordinal)
+        .Replace("%", "\\%", StringComparison.Ordinal)
+        .Replace("_", "\\_", StringComparison.Ordinal);
 }
