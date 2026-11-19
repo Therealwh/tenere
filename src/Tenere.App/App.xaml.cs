@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Interop;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Tenere.Core.Abstractions;
@@ -26,6 +27,7 @@ public partial class App : Application
     private IClipboardMonitor? _monitor;
     private CancellationTokenSource? _shutdown;
     private ILogger<App>? _logger;
+    private MainViewModel? _viewModel;
 
     protected override async void OnStartup(StartupEventArgs e)
     {
@@ -67,6 +69,8 @@ public partial class App : Application
                 var handle = new WindowInteropHelper(window).Handle;
                 WindowBackdrop.ApplyMica(handle, settings.Current.Appearance.UseMica);
             };
+            _viewModel = (MainViewModel)window.DataContext;
+            _ = _viewModel.LoadCommand.ExecuteAsync(null);
             MainWindow = window;
             window.Show();
         }
@@ -110,6 +114,7 @@ public partial class App : Application
         try
         {
             await capture.CaptureAsync(snapshot, _shutdown!.Token);
+            _ = _viewModel?.RefreshCommand.ExecuteAsync(null);
         }
         catch (OperationCanceledException)
         {

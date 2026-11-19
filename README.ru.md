@@ -13,6 +13,8 @@
 
 </div>
 
+![Главное окно Tenere](docs/assets/screenshot-main.png)
+
 Tenere — локальный менеджер буфера обмена для Windows. Он сохраняет всё скопированное, показывает визуальную историю, находит текст на старых скриншотах через локальный OCR, преобразует содержимое перед вставкой и по умолчанию не пускает секреты в историю.
 
 Без аккаунта. Без облака. Без телеметрии.
@@ -51,6 +53,8 @@ Tenere работает полностью офлайн. Он не создаё�
 
 C# · .NET 10 LTS · WPF · SQLite с FTS5 · Windows Media OCR · Win32 clipboard API · Inno Setup
 
+Замеры — в [docs/BENCHMARKS.md](docs/BENCHMARKS.md).
+
 ## Дорожная карта
 
 [ROADMAP.md](ROADMAP.md) и [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
@@ -63,4 +67,4 @@ C# · .NET 10 LTS · WPF · SQLite с FTS5 · Windows Media OCR · Win32 clipboa
 
 [MIT](LICENSE)
 
-> Скриншоты и демо-GIF будут добавлены к первому публичному релизу.
+Демо-GIF будет добавлено к первому публичному релизу.

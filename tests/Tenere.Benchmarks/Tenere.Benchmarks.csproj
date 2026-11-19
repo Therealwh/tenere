@@ -2,6 +2,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Tenere.Core\Tenere.Core.csproj" />
+    <ProjectReference Include="..\..\src\Tenere.Data\Tenere.Data.csproj" />
+    <ProjectReference Include="..\..\src\Tenere.Shared\Tenere.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -187,7 +187,8 @@
                 <Grid>
                     <TextBlock Text="&#xE721;" FontFamily="{DynamicResource IconFontFamily}" FontSize="15"
                                Foreground="{DynamicResource SubtleIconBrush}" VerticalAlignment="Center" Margin="14,0,0,0" />
-                    <TextBox x:Name="SearchBox" Margin="40,0,12,0" VerticalAlignment="Center"
+                    <TextBox x:Name="SearchBox" AutomationProperties.AutomationId="SearchBox"
+                             Margin="40,0,12,0" VerticalAlignment="Center"
                              Background="Transparent" BorderThickness="0" FontSize="14"
                              Foreground="{DynamicResource TextPrimaryBrush}" CaretBrush="{DynamicResource AccentBrush}"
                              Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
@@ -243,7 +244,8 @@
 
             <!-- Clip cards -->
             <Grid Grid.Row="3">
-                <ListBox x:Name="ClipList" ItemsSource="{Binding Items}"
+                <ListBox x:Name="ClipList" AutomationProperties.AutomationId="ClipList"
+                         ItemsSource="{Binding Items}"
                          Background="Transparent" BorderThickness="0"
                          ItemTemplate="{StaticResource ClipCardTemplate}"
                          ItemContainerStyle="{StaticResource CardContainerStyle}"

@@ -13,6 +13,8 @@
 
 </div>
 
+![Tenere main window](docs/assets/screenshot-main.png)
+
 Tenere is a local-first clipboard manager for Windows. It keeps everything you copy, shows it as a visual history, finds text inside old screenshots with local OCR, transforms content before pasting, and keeps secrets out of your history by default.
 
 No account. No cloud. No telemetry.
@@ -59,6 +61,8 @@ Read [docs/PRIVACY.md](docs/PRIVACY.md) for the full privacy model.
 
 C# · .NET 10 LTS · WPF · SQLite with FTS5 · Windows Media OCR · Win32 clipboard APIs · Inno Setup
 
+Measurements are in [docs/BENCHMARKS.md](docs/BENCHMARKS.md).
+
 ## Roadmap
 
 See [ROADMAP.md](ROADMAP.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
@@ -71,4 +75,4 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 
 [MIT](LICENSE)
 
-> Screenshots and a demo GIF will be added with the first public release.
+A demo GIF will be added with the first public release.
