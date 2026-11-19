@@ -31,4 +31,28 @@ public class MainWindowTests
 
         app.Close();
     }
+
+    [Fact]
+    [Trait("Category", "UI")]
+    public void SettingsButton_OpensSettingsWindow()
+    {
+        var executable = Path.Combine(AppContext.BaseDirectory, "Tenere.exe");
+        using var app = Application.Launch(executable);
+        using var automation = new UIA3Automation();
+
+        var main = app.GetMainWindow(automation, TimeSpan.FromSeconds(15));
+        Assert.NotNull(main);
+
+        var settingsButton = main.FindFirstDescendant(cf => cf.ByText("Settings"))?.AsButton();
+        Assert.NotNull(settingsButton);
+        settingsButton.Click();
+        Thread.Sleep(1200);
+
+        var settings = app.GetAllTopLevelWindows(automation)
+            .FirstOrDefault(window => window.Title is "Settings" or "Настройки");
+        Assert.NotNull(settings);
+        Assert.NotNull(settings.FindFirstDescendant(cf => cf.ByAutomationId("LanguageCombo")));
+
+        app.Close();
+    }
 }

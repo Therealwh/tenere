@@ -45,7 +45,8 @@ Last updated: 2026-11-19
 - Idle memory is stable but above the target: 114 MB working set, 69.5 MB private bytes versus the 25–50 MB goal.
 - No OCR language packs on this machine, so accuracy on real screenshots cannot be measured here.
 - Installer is unsigned; Windows SmartScreen will warn until a code-signing certificate is added.
-- Earlier hosted CI failure was the FlaUI UI test: no interactive desktop on the runner. CI now excludes `Category=UI`; the UI test still runs locally.
+- Earlier hosted CI failure was the FlaUI UI test: no interactive desktop on the runner. CI now excludes `Category=UI`; the UI tests still run locally.
+- Settings window title can appear in Russian on this host because WPF resolves `x:Static` against the thread UI culture before the saved language is applied; resource strings themselves switch correctly.
 
 ## Last successful build
 
@@ -53,8 +54,8 @@ Last updated: 2026-11-19
 
 ## Last successful test
 
-`dotnet test Tenere.slnx -c Release --no-build` — 23 passed, 0 failed
-(UnitTests 11, IntegrationTests 11, UiTests 1 real FlaUI test).
+`dotnet test Tenere.slnx -c Release --no-build` — 25 passed, 0 failed
+(UnitTests 12, IntegrationTests 11, UiTests 2 real FlaUI tests).
 
 ## Benchmarks
 
