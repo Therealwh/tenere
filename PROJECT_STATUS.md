@@ -22,12 +22,13 @@ Last updated: 2026-11-19
 - Unit, integration, real FlaUI UI and OCR degradation tests implemented.
 - Benchmark project implemented; results in `docs/BENCHMARKS.md`.
 - CI and release workflows, Inno Setup script and documentation written.
+- Hosted CI passes for unit and integration tests; UI tests are excluded from hosted runs.
 - Draft GitHub release `v0.1.0` created, not published.
 - Idle memory growth fixed with conservative GC settings.
 
 ## Current
 
-- Verifying Inno Setup installer build locally.
+- Nothing blocking. Release draft awaits user approval.
 
 ## Not started
 
@@ -39,7 +40,8 @@ Last updated: 2026-11-19
 - .NET SDK is installed under `C:\Temp\dotnet`, not globally on PATH. Use the full path or set `DOTNET_ROOT`.
 - Idle memory is stable but above the target: 114 MB working set, 69.5 MB private bytes versus the 25–50 MB goal.
 - No OCR language packs on this machine, so accuracy on real screenshots cannot be measured here.
-- Inno Setup compiler was not preinstalled; local verification is in progress.
+- Installer is unsigned; Windows SmartScreen will warn until a code-signing certificate is added.
+- Earlier hosted CI failure was the FlaUI UI test: no interactive desktop on the runner. CI now excludes `Category=UI`; the UI test still runs locally.
 
 ## Last successful build
 
@@ -61,6 +63,11 @@ Last updated: 2026-11-19
 
 Self-contained publish: 272 files, 157 MB. `Tenere.exe` starts and stays alive.
 
+## Installer verification
+
+Inno Setup 6.7.4 compiled `installer/Output/Tenere-0.1.0-setup.exe` (48.4 MB) with EN/RU languages.
+Silent install to `C:\Temp\TenereInstall` succeeded; installed app started and stayed alive; silent uninstall succeeded.
+
 ## Next step
 
-Finish installer verification, push final changes, then await user approval before publishing the release.
+Await user approval before publishing the release. Optional follow-up work: reduce idle memory further, add DPI/multi-monitor checks, add signed MSIX when a certificate is available.

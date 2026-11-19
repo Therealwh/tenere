@@ -23,7 +23,8 @@ jobs:
       - name: Build
         run: dotnet build Tenere.slnx -c Release --no-restore
       - name: Test
-        run: dotnet test Tenere.slnx -c Release --no-build --logger "trx;LogFileName=results.trx"
+        # UI tests need an interactive desktop and are run locally, not on hosted runners.
+        run: dotnet test Tenere.slnx -c Release --no-build --filter "Category!=UI" --logger "trx;LogFileName=results.trx"
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4

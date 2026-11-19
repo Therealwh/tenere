@@ -11,7 +11,7 @@
 - [x] English and Russian localization
 - [x] Privacy Shield baseline
 - [x] Installer script and portable build
-- [ ] Installer build verification in CI
+- [x] Installer build verified locally with Inno Setup 6.7.4 (install, launch, uninstall)
 - [x] CI passing locally; GitHub Actions not yet exercised
 - [x] Unit, integration and UI automation tests
 - [x] Benchmarks with published numbers
