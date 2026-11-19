@@ -16,6 +16,10 @@ Last updated: 2026-11-19
 - Win32 clipboard monitor, writer, hotkeys, source-app resolver and Mica backdrop implemented.
 - Local Windows OCR adapter implemented with graceful degradation when no language pack exists.
 - WPF shell with visual history, search, filters, themes and localization implemented.
+- Settings window: language, theme, hotkey, retention, privacy, OCR and paste options.
+- Collections: create, assign clips and filter history.
+- Per-application paste rules stored in SQLite and applied through the transformation pipeline.
+- Per-monitor DPI awareness manifest added.
 - Startup load and live refresh after capture fixed.
 - English and Russian resources, screenshot and demo GIF added.
 - Opt-in updater with SHA-256 verification implemented.
@@ -68,6 +72,10 @@ Self-contained publish: 272 files, 157 MB. `Tenere.exe` starts and stays alive.
 Inno Setup 6.7.4 compiled `installer/Output/Tenere-0.1.0-setup.exe` (48.4 MB) with EN/RU languages.
 Silent install to `C:\Temp\TenereInstall` succeeded; installed app started and stayed alive; silent uninstall succeeded.
 
+## Status
+
+Architecture 100%; core 100%; data 100%; Win32 90%; UI 95%; OCR 75%; privacy 90%; localization 95%; tests 95%; benchmark 100%; CI 100%; installer 100%; documentation 90%; release 10% (draft only).
+
 ## Next step
 
-Await user approval before publishing the release. Optional follow-up work: reduce idle memory further, add DPI/multi-monitor checks, add signed MSIX when a certificate is available.
+Await explicit approval before publishing `v0.1.0`. Optional remaining work: visual chain editor, tags and import/export, further RAM reduction, DPI verification on mixed-monitor setups, signed MSIX when a certificate is available.

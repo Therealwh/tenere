@@ -25,4 +25,28 @@
   <data name="Links" xml:space="preserve"><value>Ссылки</value></data>
   <data name="Code" xml:space="preserve"><value>Код</value></data>
   <data name="Text" xml:space="preserve"><value>Текст</value></data>
+  <data name="SettingsTitle" xml:space="preserve"><value>Настройки</value></data>
+  <data name="GeneralSection" xml:space="preserve"><value>Общие</value></data>
+  <data name="LanguageLabel" xml:space="preserve"><value>Язык</value></data>
+  <data name="ThemeLabel" xml:space="preserve"><value>Тема</value></data>
+  <data name="HotkeyLabel" xml:space="preserve"><value>Горячая клавиша</value></data>
+  <data name="HistorySection" xml:space="preserve"><value>История</value></data>
+  <data name="RetentionLabel" xml:space="preserve"><value>Хранить историю (дней)</value></data>
+  <data name="PrivacySection" xml:space="preserve"><value>Приватность</value></data>
+  <data name="PrivacyShieldLabel" xml:space="preserve"><value>Включить защиту приватности</value></data>
+  <data name="ExcludedAppsLabel" xml:space="preserve"><value>Исключённые приложения (через запятую)</value></data>
+  <data name="OcrSection" xml:space="preserve"><value>Распознавание текста</value></data>
+  <data name="OcrEnabledLabel" xml:space="preserve"><value>Распознавать текст на изображениях</value></data>
+  <data name="PasteSection" xml:space="preserve"><value>Вставка</value></data>
+  <data name="PlainTextDefaultLabel" xml:space="preserve"><value>По умолчанию вставлять чистый текст</value></data>
+  <data name="Save" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="CollectionsTitle" xml:space="preserve"><value>Коллекции</value></data>
+  <data name="NewCollection" xml:space="preserve"><value>Новая коллекция</value></data>
+  <data name="MoveToCollection" xml:space="preserve"><value>Переместить в коллекцию</value></data>
+  <data name="AppRules" xml:space="preserve"><value>Правила вставки для приложений</value></data>
+  <data name="AddRule" xml:space="preserve"><value>Добавить правило</value></data>
+  <data name="ProcessName" xml:space="preserve"><value>Имя процесса</value></data>
+  <data name="ChainSteps" xml:space="preserve"><value>Шаги преобразования (через запятую)</value></data>
+  <data name="Enabled" xml:space="preserve"><value>Включено</value></data>
 </root>

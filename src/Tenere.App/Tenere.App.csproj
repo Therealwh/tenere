@@ -28,6 +28,8 @@
     <Company>Tenere</Company>
     <Description>A fast, private clipboard manager that remembers everything you copy.</Description>
     <Version>1.0.0</Version>
+    <SatelliteResourceLanguages>en;ru</SatelliteResourceLanguages>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <ServerGarbageCollection>false</ServerGarbageCollection>
     <ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>
   </PropertyGroup>

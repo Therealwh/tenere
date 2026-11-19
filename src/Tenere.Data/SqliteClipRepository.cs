@@ -236,6 +236,81 @@ public sealed class SqliteClipRepository : IClipRepository
         return (long)(await command.ExecuteScalarAsync(ct))!;
     }
 
+    public async Task<IReadOnlyList<CollectionInfo>> GetCollectionsAsync(CancellationToken ct)
+    {
+        await using var connection = await OpenAsync(ct);
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            SELECT c.id, c.name, COUNT(cl.id)
+            FROM collections c
+            LEFT JOIN clips cl ON cl.collection_id = c.id
+            GROUP BY c.id, c.name
+            ORDER BY c.name
+            """;
+        var result = new List<CollectionInfo>();
+        await using var reader = await command.ExecuteReaderAsync(ct);
+        while (await reader.ReadAsync(ct))
+            result.Add(new CollectionInfo(reader.GetInt64(0), reader.GetString(1), reader.GetInt32(2)));
+        return result;
+    }
+
+    public async Task<long> AddCollectionAsync(string name, CancellationToken ct)
+    {
+        await using var connection = await OpenAsync(ct);
+        await using var command = connection.CreateCommand();
+        command.CommandText = "INSERT INTO collections(name, created_at) VALUES($name, $created); SELECT last_insert_rowid();";
+        command.Parameters.AddWithValue("$name", name);
+        command.Parameters.AddWithValue("$created", ToStorage(DateTimeOffset.UtcNow));
+        return (long)(await command.ExecuteScalarAsync(ct))!;
+    }
+
+    public async Task AssignCollectionAsync(long clipId, long? collectionId, CancellationToken ct)
+    {
+        await using var connection = await OpenAsync(ct);
+        await using var command = connection.CreateCommand();
+        command.CommandText = "UPDATE clips SET collection_id = $collection WHERE id = $id";
+        command.Parameters.AddWithValue("$collection", collectionId.HasValue ? collectionId.Value : DBNull.Value);
+        command.Parameters.AddWithValue("$id", clipId);
+        await command.ExecuteNonQueryAsync(ct);
+    }
+
+    public async Task<IReadOnlyList<AppRuleInfo>> GetAppRulesAsync(CancellationToken ct)
+    {
+        await using var connection = await OpenAsync(ct);
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            SELECT id, app_name, COALESCE(value, ''), enabled
+            FROM app_rules
+            WHERE rule_type = 'transform_chain'
+            ORDER BY app_name
+            """;
+        var result = new List<AppRuleInfo>();
+        await using var reader = await command.ExecuteReaderAsync(ct);
+        while (await reader.ReadAsync(ct))
+            result.Add(new AppRuleInfo(reader.GetInt64(0), reader.GetString(1), reader.GetString(2), reader.GetInt64(3) != 0));
+        return result;
+    }
+
+    public async Task SaveAppRuleAsync(string processName, string chainJson, bool enabled, CancellationToken ct)
+    {
+        await using var connection = await OpenAsync(ct);
+        await using (var delete = connection.CreateCommand())
+        {
+            delete.CommandText = "DELETE FROM app_rules WHERE rule_type = 'transform_chain' AND app_name = $app";
+            delete.Parameters.AddWithValue("$app", processName);
+            await delete.ExecuteNonQueryAsync(ct);
+        }
+        await using var insert = connection.CreateCommand();
+        insert.CommandText = """
+            INSERT INTO app_rules(app_name, rule_type, value, enabled)
+            VALUES($app, 'transform_chain', $value, $enabled)
+            """;
+        insert.Parameters.AddWithValue("$app", processName);
+        insert.Parameters.AddWithValue("$value", chainJson);
+        insert.Parameters.AddWithValue("$enabled", enabled ? 1 : 0);
+        await insert.ExecuteNonQueryAsync(ct);
+    }
+
     private async Task<SqliteConnection> OpenAsync(CancellationToken ct)
     {
         var builder = new SqliteConnectionStringBuilder

@@ -19,10 +19,10 @@
 
 ## v0.2 — Smart paste
 
-- [ ] Transformation chains and visual editor
-- [ ] Per-application paste rules
-- [ ] Collections and tags
-- [ ] Import and export
+- [x] Per-application paste rules backed by SQLite
+- [x] Collections with create/assign/filter
+- [ ] Visual chain editor (rules currently edited as comma-separated steps in Settings)
+- [ ] Tags and import/export
 
 ## v0.3 — Polish
 

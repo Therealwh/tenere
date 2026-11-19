@@ -104,8 +104,13 @@ public partial class App : Application
         services.AddSingleton<Win32ClipboardMonitor>();
         services.AddSingleton<IClipboardMonitor>(sp => sp.GetRequiredService<Win32ClipboardMonitor>());
         services.AddSingleton<IClipboardWriter, Win32ClipboardWriter>();
+        services.AddSingleton<IAppRuleService, DatabaseAppRuleService>();
+        services.AddSingleton<Func<string?>>(_ => SourceAppResolver.Resolve);
 
         services.AddSingleton<MainViewModel>();
+        services.AddTransient<SettingsViewModel>();
+        services.AddTransient<SettingsWindow>();
+        services.AddSingleton<Func<SettingsWindow>>(sp => () => sp.GetRequiredService<SettingsWindow>());
         services.AddTransient<Tenere.UI.MainWindow>();
     }
 
