@@ -25,6 +25,7 @@ Last updated: 2026-11-19
 - Per-monitor DPI awareness manifest added.
 - Startup load and live refresh after capture fixed.
 - English and Russian resources, screenshot and demo GIF added.
+- Language switches immediately through `DynamicResource`; no restart required.
 - Opt-in updater with SHA-256 verification implemented.
 - Unit, integration, real FlaUI UI and OCR degradation tests implemented.
 - Benchmark project implemented; results in `docs/BENCHMARKS.md`.
@@ -49,7 +50,6 @@ Last updated: 2026-11-19
 - No OCR language packs on this machine, so accuracy on real screenshots cannot be measured here.
 - Installer is unsigned; Windows SmartScreen will warn until a code-signing certificate is added.
 - Earlier hosted CI failure was the FlaUI UI test: no interactive desktop on the runner. CI now excludes `Category=UI`; the UI tests still run locally.
-- Settings window title can appear in Russian on this host because WPF resolves `x:Static` against the thread UI culture before the saved language is applied; resource strings themselves switch correctly.
 
 ## Last successful build
 
@@ -57,8 +57,8 @@ Last updated: 2026-11-19
 
 ## Last successful test
 
-`dotnet test Tenere.slnx -c Release --no-build` — 26 passed, 0 failed
-(UnitTests 12, IntegrationTests 11, UiTests 3 real FlaUI tests).
+`dotnet test Tenere.slnx -c Release --no-build` — 27 passed, 0 failed
+(UnitTests 12, IntegrationTests 11, UiTests 4 real FlaUI tests).
 
 ## Benchmarks
 

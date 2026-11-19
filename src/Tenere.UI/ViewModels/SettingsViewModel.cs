@@ -25,6 +25,9 @@ public sealed partial class SettingsViewModel : ObservableObject
     [ObservableProperty] private string newChainSteps = string.Empty;
     [ObservableProperty] private bool newRuleEnabled = true;
 
+    public string[] Languages { get; } = ["en", "ru"];
+    public string[] Themes { get; } = ["system", "light", "dark"];
+
     public ObservableCollection<AppRuleInfo> Rules { get; } = new();
 
     public event EventHandler? RequestClose;
@@ -67,14 +70,16 @@ public sealed partial class SettingsViewModel : ObservableObject
         current.Paste.PlainTextByDefault = PlainTextDefault;
         _settings.Save();
 
+        CultureInfo culture;
         try
         {
-            Strings.Culture = new CultureInfo(current.General.Language);
+            culture = new CultureInfo(current.General.Language);
         }
         catch (CultureNotFoundException)
         {
-            Strings.Culture = CultureInfo.CurrentUICulture;
+            culture = CultureInfo.CurrentUICulture;
         }
+        LiveLocalization.Apply(System.Windows.Application.Current.Resources, culture);
         ThemeManager.Apply(System.Windows.Application.Current.Resources, current, ThemeManager.SystemUsesLightTheme());
 
         RequestClose?.Invoke(this, EventArgs.Empty);

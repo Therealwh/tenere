@@ -18,7 +18,7 @@ All notable changes to this project are documented here. This project adheres to
 - SQLite storage with FTS5 full-text search.
 - Local OCR adapter using Windows Media OCR.
 - Smart paste transformation pipeline.
-- English and Russian localization resources.
+- English and Russian localization resources with live switching via `DynamicResource` — no restart needed.
 - Unit, integration, UI and benchmark test projects.
 - CI and release workflows, Inno Setup installer script.
 

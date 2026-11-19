@@ -44,17 +44,18 @@ public partial class App : Application
             var settings = _services.GetRequiredService<ISettingsService>();
             settings.Load();
 
+            var culture = CultureInfo.CurrentUICulture;
             try
             {
-                var culture = new CultureInfo(settings.Current.General.Language);
-                CultureInfo.DefaultThreadCurrentUICulture = culture;
-                Thread.CurrentThread.CurrentUICulture = culture;
-                Strings.Culture = culture;
+                culture = new CultureInfo(settings.Current.General.Language);
             }
             catch (CultureNotFoundException)
             {
-                Strings.Culture = CultureInfo.CurrentUICulture;
+                culture = CultureInfo.CurrentUICulture;
             }
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+            LiveLocalization.Apply(Resources, culture);
 
             ThemeManager.Apply(Resources, settings.Current, ThemeManager.SystemUsesLightTheme());
 
