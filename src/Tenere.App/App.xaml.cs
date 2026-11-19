@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using CommunityToolkit.Mvvm.Input;
@@ -45,7 +46,10 @@ public partial class App : Application
 
             try
             {
-                Strings.Culture = new CultureInfo(settings.Current.General.Language);
+                var culture = new CultureInfo(settings.Current.General.Language);
+                CultureInfo.DefaultThreadCurrentUICulture = culture;
+                Thread.CurrentThread.CurrentUICulture = culture;
+                Strings.Culture = culture;
             }
             catch (CultureNotFoundException)
             {

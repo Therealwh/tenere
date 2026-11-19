@@ -17,6 +17,8 @@ Last updated: 2026-11-19
 - Local Windows OCR adapter implemented with graceful degradation when no language pack exists.
 - WPF shell with visual history, search, filters, themes and localization implemented.
 - Settings window: language, theme, hotkey, retention, privacy, OCR and paste options.
+- Unified dark/light styles for input controls and custom chrome for the settings window;
+  screenshots added to both READMEs.
 - Collections: create, assign clips and filter history.
 - Per-application paste rules stored in SQLite and applied through the transformation pipeline.
 - Per-monitor DPI awareness manifest added.

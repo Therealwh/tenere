@@ -15,6 +15,8 @@
 
 ![Tenere main window](docs/assets/screenshot-main.png)
 
+![Tenere settings](docs/assets/screenshot-settings.png)
+
 Tenere is a local-first clipboard manager for Windows. It keeps everything you copy, shows it as a visual history, finds text inside old screenshots with local OCR, transforms content before pasting, and keeps secrets out of your history by default.
 
 No account. No cloud. No telemetry.
