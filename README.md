@@ -75,4 +75,4 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 
 [MIT](LICENSE)
 
-A demo GIF will be added with the first public release.
+![Tenere demo](docs/assets/demo.gif)

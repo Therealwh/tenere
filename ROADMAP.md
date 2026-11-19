@@ -4,14 +4,18 @@
 
 - [x] Research and naming
 - [x] Architecture
-- [ ] Clipboard capture and history
-- [ ] SQLite storage with FTS5 search
-- [ ] Local OCR
-- [ ] Visual history UI
-- [ ] English and Russian localization
-- [ ] Privacy Shield baseline
-- [ ] Installer and portable build
-- [ ] CI passing
+- [x] Clipboard capture and history
+- [x] SQLite storage with FTS5 search
+- [x] Local OCR adapter (accuracy not measured here: no OCR language packs installed)
+- [x] Visual history UI
+- [x] English and Russian localization
+- [x] Privacy Shield baseline
+- [x] Installer script and portable build
+- [ ] Installer build verification in CI
+- [x] CI passing locally; GitHub Actions not yet exercised
+- [x] Unit, integration and UI automation tests
+- [x] Benchmarks with published numbers
+- [x] Screenshots and demo GIF
 
 ## v0.2 — Smart paste
 
@@ -24,15 +28,15 @@
 
 - [ ] Themes, Mica/Acrylic, multi-monitor and DPI verification
 - [ ] Accessibility pass with Accessibility Insights
-- [ ] Performance benchmarks published
+- [ ] Reduce idle memory toward the 25–50 MB target
 - [ ] Long-run stability testing
 
 ## v1.0 — Public release
 
 - [ ] Full test coverage and release artifacts
-- [ ] Screenshots and demo GIF
 - [ ] Documentation complete in both languages
 - [ ] Signed MSIX (requires a signing certificate)
+- [ ] User approval to publish
 
 ## Future, not committed
 

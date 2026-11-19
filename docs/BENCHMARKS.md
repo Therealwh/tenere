@@ -21,12 +21,17 @@ Search target was under 100 ms on 10,000 items. Measured result: 4.752 ms.
 
 ## Idle memory
 
-Smoke test of the built `Tenere.exe`, measured 6 seconds after launch with a single clip in history:
+Smoke test of the built `Tenere.exe` with a single clip in history, sampled over 30 seconds after enabling conservative GC settings:
 
-- Working set: 116 MB.
-- Private bytes: 70.1 MB.
+| Time | Working set | Private bytes |
+| ---: | ---: | ---: |
+| 5 s | 114.0 MB | 69.5 MB |
+| 15 s | 114.0 MB | 69.5 MB |
+| 30 s | 114.0 MB | 69.4 MB |
 
-The working-set target from the architecture was 25–50 MB. Current measurement exceeds it. This is a known gap, caused mainly by the WPF and .NET baseline plus the Windows 11 backdrop composition. Reduce it before making public performance claims.
+Before the GC settings, memory grew from 118 MB to 134 MB working set over the same interval. `System.GC.ConserveMemory=9`, `System.GC.RetainVM=false`, and disabled concurrent/server GC removed the growth.
+
+The working-set target from the architecture was 25–50 MB. Current measurement still exceeds it. This is a known gap, caused mainly by the WPF and .NET baseline. Do not make public performance claims about idle memory until it is reduced.
 
 ## Reproduce
 

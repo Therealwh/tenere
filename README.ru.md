@@ -67,4 +67,4 @@ C# · .NET 10 LTS · WPF · SQLite с FTS5 · Windows Media OCR · Win32 clipboa
 
 [MIT](LICENSE)
 
-Демо-GIF будет добавлено к первому публичному релизу.
+![Демо Tenere](docs/assets/demo.gif)
