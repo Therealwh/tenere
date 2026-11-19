@@ -62,8 +62,10 @@ public class MainWindowTests
 
     [Fact]
     [Trait("Category", "UI")]
-    public void CopyButton_RunsCopyCommand()
+    public void CopyButton_PutsClipOnClipboard()
     {
+        TestClipboard.SetText("SENTINEL-BEFORE-COPY");
+
         CleanupApps();
         var executable = Path.Combine(AppContext.BaseDirectory, "Tenere.exe");
         using var app = FlauiApplication.Launch(executable);
@@ -72,13 +74,15 @@ public class MainWindowTests
         var main = app.GetMainWindow(automation, TimeSpan.FromSeconds(15));
         Assert.NotNull(main);
 
+        // The app captures the sentinel clip on startup; the top card copies it back.
+        Thread.Sleep(1200);
+
         var copy = main.FindFirstDescendant(cf => cf.ByAutomationId("CopyButton"))?.AsButton();
         Assert.NotNull(copy);
         copy.Click();
-        Thread.Sleep(500);
+        Thread.Sleep(800);
 
-        var status = main.FindFirstDescendant(cf => cf.ByText("Copied to clipboard."));
-        Assert.NotNull(status);
+        Assert.Equal("SENTINEL-BEFORE-COPY", TestClipboard.GetText());
 
         app.Kill();
     }
@@ -101,7 +105,9 @@ public class MainWindowTests
         settingsButton.AsButton().Click();
         Thread.Sleep(1000);
 
-        var settings = app.GetAllTopLevelWindows(automation).First(window => window != main);
+        var settings = app.GetAllTopLevelWindows(automation)
+            .FirstOrDefault(window => window.Title is "Settings" or "Настройки");
+        Assert.NotNull(settings);
         var language = settings.FindFirstDescendant(cf => cf.ByAutomationId("LanguageCombo"))?.AsComboBox();
         Assert.NotNull(language);
         language.Select(0);
@@ -125,5 +131,21 @@ public class MainWindowTests
             catch (InvalidOperationException) { }
         }
         Thread.Sleep(1500);
+
+        // Tests need a deterministic history; without this the top card depends on
+        // whatever was captured in earlier runs.
+        try
+        {
+            python("import sqlite3, os; p = os.path.join(os.environ['LOCALAPPDATA'], 'Tenere', 'tenere.db'); c = sqlite3.connect(p); c.execute('DELETE FROM clips'); c.commit()");
+        }
+        catch { }
     }
+
+    private static void python(string code) =>
+        System.Diagnostics.Process.Start(
+            new System.Diagnostics.ProcessStartInfo("python", $"-c \"{code}\"")
+            {
+                UseShellExecute = false,
+                CreateNoWindow = true
+            })!.WaitForExit(10_000);
 }

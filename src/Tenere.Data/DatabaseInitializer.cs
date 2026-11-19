@@ -12,6 +12,7 @@ public static class DatabaseInitializer
         PRAGMA synchronous=NORMAL;
         PRAGMA foreign_keys=ON;
         PRAGMA recursive_triggers=ON;
+        PRAGMA busy_timeout=5000;
 
         CREATE TABLE IF NOT EXISTS collections (
             id          INTEGER PRIMARY KEY AUTOINCREMENT,

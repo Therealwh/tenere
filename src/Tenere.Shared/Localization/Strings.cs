@@ -24,6 +24,8 @@ public static class Strings
     public static string EmptyHint => Get(nameof(EmptyHint));
     public static string Paste => Get(nameof(Paste));
     public static string Copy => Get(nameof(Copy));
+    public static string TrayOpen => Get(nameof(TrayOpen));
+    public static string TrayExit => Get(nameof(TrayExit));
     public static string Pin => Get(nameof(Pin));
     public static string Delete => Get(nameof(Delete));
     public static string Privacy => Get(nameof(Privacy));

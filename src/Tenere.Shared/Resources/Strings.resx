@@ -14,6 +14,8 @@
   <data name="EmptyHint" xml:space="preserve"><value>Copy something — it will appear here instantly.</value></data>
   <data name="Paste" xml:space="preserve"><value>Paste</value></data>
   <data name="Copy" xml:space="preserve"><value>Copy to clipboard</value></data>
+  <data name="TrayOpen" xml:space="preserve"><value>Open Tenere</value></data>
+  <data name="TrayExit" xml:space="preserve"><value>Exit</value></data>
   <data name="Pin" xml:space="preserve"><value>Pin</value></data>
   <data name="Delete" xml:space="preserve"><value>Delete</value></data>
   <data name="Privacy" xml:space="preserve"><value>Privacy Shield</value></data>

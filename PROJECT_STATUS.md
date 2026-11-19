@@ -26,6 +26,7 @@ Last updated: 2026-11-19
 - Per-monitor DPI awareness manifest added.
 - Startup load and live refresh after capture fixed.
 - Global hotkey toggles the history window.
+- Close-to-tray with a styled tray menu and a custom application icon.
 - English and Russian resources, screenshot and demo GIF added.
 - Language switches immediately through `DynamicResource`; no restart required.
 - Opt-in updater with SHA-256 verification implemented.
@@ -52,6 +53,7 @@ Last updated: 2026-11-19
 - No OCR language packs on this machine, so accuracy on real screenshots cannot be measured here.
 - Installer is unsigned; Windows SmartScreen will warn until a code-signing certificate is added.
 - Earlier hosted CI failure was the FlaUI UI test: no interactive desktop on the runner. CI now excludes `Category=UI`; the UI tests still run locally.
+- Local UI tests are flaky on this desktop: tray icon, global hotkey and clipboard share one machine, and parallel clipboard access occasionally blocks FlaUI. Unit and integration tests are stable.
 
 ## Last successful build
 

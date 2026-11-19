@@ -1,7 +1,10 @@
-﻿using System.Globalization;
+﻿using System.IO;
+using System.Globalization;
 using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
+using WpfApplication = System.Windows.Application;
+using WpfMessageBox = System.Windows.MessageBox;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -22,7 +25,7 @@ namespace Tenere.App;
 /// <summary>
 /// Composition root. Wires settings, logging, persistence, capture and the UI.
 /// </summary>
-public partial class App : Application
+public partial class App : WpfApplication
 {
     private ServiceProvider? _services;
     private IClipboardMonitor? _monitor;
@@ -30,6 +33,8 @@ public partial class App : Application
     private ILogger<App>? _logger;
     private MainViewModel? _viewModel;
     private GlobalHotkey? _hotkey;
+    private TrayService? _tray;
+    private bool _exitRequested;
 
     protected override async void OnStartup(StartupEventArgs e)
     {
@@ -95,17 +100,34 @@ public partial class App : Application
                     window.Activate();
                 }
             });
+
+            var icon = LoadAppIcon();
+            _tray = new TrayService(icon, () => Dispatcher.Invoke(ShowMainWindow), () => Dispatcher.Invoke(ExitFromTray));
+            window.Closing += (_, args) =>
+            {
+                if (_exitRequested) return;
+                args.Cancel = true;
+                window.Hide();
+            };
         }
         catch (Exception ex)
         {
             _logger?.LogCritical(ex, "Application startup failed");
-            MessageBox.Show(
+            WpfMessageBox.Show(
                 $"Tenere could not start.{Environment.NewLine}{ex.Message}",
                 "Tenere",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
             Shutdown();
         }
+    }
+
+    private static System.Drawing.Icon LoadAppIcon()
+    {
+        var stream = typeof(App).Assembly.GetManifestResourceStream("Tenere.App.Assets.appicon.ico");
+        if (stream is not null)
+            return new System.Drawing.Icon(stream);
+        return (System.Drawing.Icon)SystemIcons.Application.Clone();
     }
 
     private static void ConfigureServices(IServiceCollection services)
@@ -153,8 +175,27 @@ public partial class App : Application
         }
     }
 
+    private static void ShowMainWindow()
+    {
+        var window = WpfApplication.Current?.MainWindow;
+        if (window is null) return;
+        window.Show();
+        if (window.WindowState == WindowState.Minimized)
+            window.WindowState = WindowState.Normal;
+        window.Activate();
+    }
+
+    private void ExitFromTray()
+    {
+        _exitRequested = true;
+        _tray?.Dispose();
+        MainWindow?.Close();
+        Shutdown();
+    }
+
     protected override void OnExit(ExitEventArgs e)
     {
+        _tray?.Dispose();
         _hotkey?.Dispose();
         if (_monitor is not null)
         {

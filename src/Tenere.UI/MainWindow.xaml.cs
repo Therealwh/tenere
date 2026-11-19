@@ -22,7 +22,7 @@ public partial class MainWindow : Window
     private void Maximize_Click(object sender, RoutedEventArgs e) =>
         WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
 
-    private void Close_Click(object sender, RoutedEventArgs e) => Close();
+    private void Close_Click(object sender, RoutedEventArgs e) => Hide();
 
     private void ClipCard_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
