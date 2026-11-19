@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tenere.Shared\Tenere.Shared.csproj" />
+    <ProjectReference Include="..\Tenere.UI\Tenere.UI.csproj" />
+    <ProjectReference Include="..\Tenere.Core\Tenere.Core.csproj" />
+    <ProjectReference Include="..\Tenere.Data\Tenere.Data.csproj" />
+    <ProjectReference Include="..\Tenere.Platform\Tenere.Platform.csproj" />
+    <ProjectReference Include="..\Tenere.Ocr\Tenere.Ocr.csproj" />
+    <ProjectReference Include="..\Tenere.Updater\Tenere.Updater.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="11.0.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>Tenere</AssemblyName>
+    <AssemblyTitle>Tenere</AssemblyTitle>
+    <Product>Tenere</Product>
+    <Company>Tenere</Company>
+    <Description>A fast, private clipboard manager that remembers everything you copy.</Description>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+</Project>

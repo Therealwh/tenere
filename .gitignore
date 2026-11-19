@@ -1,0 +1,41 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+artifacts/
+TestResults/
+BenchmarkDotNet.Artifacts/
+
+## Build output
+[Dd]ebug/
+[Rr]elease/
+publish/
+*.msix
+*.appx
+*.exe
+*.zip
+
+## IDE
+.vscode/
+.idea/
+
+## OS
+Thumbs.db
+desktop.ini
+
+## Tenere data
+tenere.db
+tenere.db-*
+images/
+logs/
+settings.json
+
+## Secrets
+*.pfx
+*.snk
+*.p12
+.env
